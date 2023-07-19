@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "jest": "^29.6.1",
+    "puppeteer": "^20.8.2"
+  },
+  "scripts": {
+    "test": "jest --forceExit --detectOpenHandles"
+  }
+}

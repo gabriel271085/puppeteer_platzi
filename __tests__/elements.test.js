@@ -31,7 +31,7 @@ describe ('interacting with elements',()=>{
         await page.click('#tried-test-cafe')
         await page.type('#comments','A test from puppeteer')
         await page.click('#submit-button')
-        await page.waitForTimeout(2000)
+        await new Promise(r => setTimeout(r, 2000))
         await browser.close()
     },35000)
 })

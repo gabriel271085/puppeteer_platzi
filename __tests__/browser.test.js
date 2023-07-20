@@ -18,7 +18,7 @@ describe ('First test',()=>{
         })
         const page = await browser.newPage()
         await page.goto('https://www.google.com')
-        await page.waitForTimeout(2000)
+        await new Promise(r => setTimeout(r, 2000))
         await browser.close()
 
     })

@@ -1,6 +1,6 @@
 const puppeteer = require('puppeteer')
 
-describe ('waiting types',()=>{
+describe ('waiting for Elements',()=>{
 
     it('show the waiting types', async ()=>{
         const browser = await puppeteer.launch({
@@ -22,9 +22,9 @@ describe ('waiting types',()=>{
 
         await page.waitForXPath('//img[@src="img/logo.png"]')
 
-        //espera por funcion
+       
    
-        
+        await browser.close()
 
 
         

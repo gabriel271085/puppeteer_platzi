@@ -1,4 +1,5 @@
 const puppeteer = require('puppeteer')
+const {getText,getCount} = require('../lib/helpers')
 
 describe ('extracting info',()=>{
 
@@ -22,7 +23,7 @@ describe ('extracting info',()=>{
     it('counting the page elements', async ()=>{
         
         // la funcion $$eval selecciona todos los selectores del DOM
-        const images = await page.$$eval('img',(images)=>images.length) 
+        const images = await getCount(page,'img') 
         console.log('qty of images =',images) 
 
         },60000)
@@ -31,7 +32,7 @@ describe ('extracting info',()=>{
         
         //utilizando un selector
         await page.waitForSelector('#Header-v2 > nav.Nav-header.Nav-header-mobileCtas > div.Menu > div > div > ul > li:nth-child(8) > a')  
-        const buttonName = await page.$eval('#Header-v2 > nav.Nav-header.Nav-header-mobileCtas > div.Menu > div > div > ul > li:nth-child(8) > a', (button)=>button.textContent)
+        const buttonName = await getText(page,'#Header-v2 > nav.Nav-header.Nav-header-mobileCtas > div.Menu > div > div > ul > li:nth-child(8) > a',)
         
         console.log('button Name =',buttonName)
 

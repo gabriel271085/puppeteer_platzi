@@ -5,13 +5,13 @@ describe('devices emulation', () => {
     let browser
     let page
 
-    beforeAll(async () => {
+    beforeEach(async () => {
         browser = await puppeteer.launch({
             headless: false,
             defaultViewport: null,
             // slowMo: 300
         })
-        page = await browser.newPage()
+        page = await (await browser.createIncognitoBrowserContext()).newPage();
         await page.goto('https://platzi.com', { waitUntil: 'networkidle0' })
     }, 10000)
 

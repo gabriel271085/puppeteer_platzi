@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer');
-const fs = require('fs')
+const fs = require('fs');
+const { constants } = require('fs/promises');
 
 describe('performance', () => {
 
@@ -62,7 +63,7 @@ describe('performance', () => {
             )
         })
 
-        //iterara sobre el arreglo para crear las imagenes
+        //iterar sobre el arreglo para crear las imagenes
 
         traceScreenshots.forEach(function(snap,index){
             fs.writeFile(`trace-screenshots-${index}.png`,snap.args.snapshot, 'base64',function (err){
@@ -74,5 +75,32 @@ describe('performance', () => {
         
     }, 35000)
 
- 
+    it('performance measure of the first paint and first contentful paint', async () => {
+        const navigationPromise = page.waitForNavigation(); 
+        await page.goto('https://platzi.com', { waitUntil: 'networkidle0' });
+        await navigationPromise;
+    
+        const firstPaint = JSON.parse(
+            await page.evaluate(() => JSON.stringify(performance.getEntriesByName('first-paint')))
+        );
+    
+        const firstContentfulPaint = JSON.parse(
+            await page.evaluate(() => JSON.stringify(performance.getEntriesByName('first-contentful-paint')))
+        );
+    
+        console.log('firstPaint', firstPaint)
+        console.log('firstContentfulPaint', firstContentfulPaint)
+    }, 35000);
+    
+
+    it('performance measure of the frames per second', async () => {
+        
+       const devtoolsProtocolClient = await page.target().createCDPSession()
+       await devtoolsProtocolClient.send('Overlay.setShowFPSCounter', {show: true})
+       await page.goto('https://platzi.com')
+
+       await page.screenshot({path: 'framespersecond.jpg', type:'jpeg' })
+
+    
+    }, 35000) 
 })
